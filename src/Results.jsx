@@ -1,24 +1,48 @@
 import React from "react";
-import { getCongressMembers } from "./GetCongressMembers";
+import {
+  getCongressMembers,
+  getCongressMemberImage
+} from "./GetCongressMembers";
 
 export default class Results extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      members: []
+      members: [],
+      imageTable: {}
     };
 
-    getCongressMembers(data => this.setState({ members: data }));
+    this.getCongressMemberData();
+  }
+
+  getCongressMemberData() {
+    return getCongressMembers(data => {
+      this.setState({ members: data });
+    }).then(() => {
+      this.state.members.forEach(member => {
+        getCongressMemberImage(
+          localURL => this.setState({ [member.id.bioguide]: localURL }),
+          member.id.bioguide
+        );
+      });
+    });
   }
 
   render() {
-    console.log(this.state.members);
-
     return (
       <ul>
         {this.state.members.map(member => {
-          return <li>{member.name.first}</li>;
+          return (
+            <li key={member.id.bioguide}>
+              {this.state[member.id.bioguide] !== undefined ? (
+                <img src={this.state[member.id.bioguide]} />
+              ) : (
+                undefined
+              )}
+              {member.name.official_full}
+            </li>
+          );
         })}
       </ul>
     );
