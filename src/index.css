@@ -15,3 +15,7 @@ code {
 .member-list {
   list-style-type: none;
 }
+
+.member-image {
+  max-width: 150px;
+}
