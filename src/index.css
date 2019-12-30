@@ -14,8 +14,23 @@ code {
 
 .member-list {
   list-style-type: none;
+  display: grid;
+  grid-gap: 50px 100px;
+  grid-template-columns: auto auto auto auto;
+  padding-right: 40px;
 }
 
 .member-image {
   max-width: 150px;
+}
+
+.member-view {
+  display: flex;
+  align-items: flex-start;
+  background: #c3c3c3;
+}
+
+.member-view-info {
+  display: flex;
+  flex-direction: column;
 }
