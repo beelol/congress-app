@@ -1,10 +1,13 @@
 import React from "react";
+import { Component } from "react";
+
+import MemberView from "./MemberView";
 import {
   getCongressMembers,
   getCongressMemberImage
 } from "./GetCongressMembers";
 
-export default class Results extends React.Component {
+export default class Results extends Component {
   constructor() {
     super();
 
@@ -31,16 +34,14 @@ export default class Results extends React.Component {
 
   render() {
     return (
-      <ul>
+      <ul className={"member-list"}>
         {this.state.members.map(member => {
           return (
             <li key={member.id.bioguide}>
-              {this.state[member.id.bioguide] !== undefined ? (
-                <img src={this.state[member.id.bioguide]} />
-              ) : (
-                undefined
-              )}
-              {member.name.official_full}
+              <MemberView
+                memberName={member.name.official_full}
+                memberImage={this.state[member.id.bioguide]}
+              />
             </li>
           );
         })}
