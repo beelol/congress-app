@@ -28,9 +28,12 @@ code {
   display: flex;
   align-items: flex-start;
   background: #c3c3c3;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px #80808030;
 }
 
 .member-view-info {
   display: flex;
   flex-direction: column;
+  min-width: 160px;
 }
