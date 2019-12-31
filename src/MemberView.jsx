@@ -10,7 +10,7 @@ export default class MemberView extends Component {
         undefined
       )}
       <div className={"member-view-info"}>
-        <div>{this.props.memberName}</div>
+        <div className={"member-name"}>{this.props.memberName}</div>
         <div>{this.props.memberTitle}</div>
         <div>{this.props.memberParty}</div>
         <div>{this.props.memberState}</div>

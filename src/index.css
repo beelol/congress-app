@@ -28,6 +28,7 @@ code {
   display: flex;
   align-items: flex-start;
   background: #c3c3c3;
+  background-image: linear-gradient(to bottom right, #e6e6e6, white);
   border-radius: 10px;
   box-shadow: 10px 10px 10px #80808030;
 }
@@ -36,4 +37,9 @@ code {
   display: flex;
   flex-direction: column;
   min-width: 160px;
+  margin: 10px;
+}
+
+.member-name {
+  font-weight: bold;
 }
