@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import PageControl from "./PageControl";
 
 import MemberView from "./MemberView";
 import {
@@ -39,35 +40,38 @@ export default class Results extends Component {
 
   render() {
     return (
-      <ul className={"member-list"}>
-        {this.state.members
-          .slice(
-            this.getFirstIndexByPage(this.state.currentPage),
-            Math.min(
-              this.getFirstIndexByPage(this.state.currentPage) +
-                (this.membersPerPage - 1),
-              this.state.members.length - 1
+      <div className="app-container">
+        <ul className={"member-list"}>
+          {this.state.members
+            .slice(
+              this.getFirstIndexByPage(this.state.currentPage),
+              Math.min(
+                this.getFirstIndexByPage(this.state.currentPage) +
+                  (this.membersPerPage - 1),
+                this.state.members.length - 1
+              )
             )
-          )
-          .map(member => {
-            let term = member.terms[member.terms.length - 1];
-            let gender =
-              member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
-            let title = term.type == "sen" ? "Senator" : `Congress${gender}`;
+            .map(member => {
+              let term = member.terms[member.terms.length - 1];
+              let gender =
+                member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
+              let title = term.type == "sen" ? "Senator" : `Congress${gender}`;
 
-            return (
-              <li key={member.id.bioguide} className={"member-view"}>
-                <MemberView
-                  memberName={member.name.official_full}
-                  memberImage={this.state[member.id.bioguide]}
-                  memberTitle={title}
-                  memberParty={term.party}
-                  memberState={term.state}
-                />
-              </li>
-            );
-          })}
-      </ul>
+              return (
+                <li key={member.id.bioguide} className={"member-view"}>
+                  <MemberView
+                    memberName={member.name.official_full}
+                    memberImage={this.state[member.id.bioguide]}
+                    memberTitle={title}
+                    memberParty={term.party}
+                    memberState={term.state}
+                  />
+                </li>
+              );
+            })}
+        </ul>
+        <PageControl />
+      </div>
     );
   }
 }
