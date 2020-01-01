@@ -34,6 +34,7 @@ code {
   background-image: linear-gradient(to bottom right, #e6e6e6, white);
   border-radius: 10px;
   box-shadow: 10px 10px 10px #80808030;
+  transition: all 0.2s ease-in-out;
 }
 
 .member-list li:hover {
@@ -70,12 +71,15 @@ button {
   border: none;
   color: #a2a2a2ba;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  width: 60px;
+  height: 60px;
 }
 
 button:hover {
   color: #0059ffba;
   font: 40px system-ui;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 button:focus {
