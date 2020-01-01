@@ -22,6 +22,17 @@ export default class Results extends Component {
     this.getCongressMemberData();
   }
 
+  getNumPages = () =>
+    Math.ceil(this.state.members.length / this.membersPerPage);
+
+  cycleToNextPage = () =>
+    this.setState({
+      currentPage: Math.min(this.state.currentPage + 1, this.getNumPages() - 1)
+    });
+
+  cycleToPreviousPage = () =>
+    this.setState({ currentPage: Math.max(this.state.currentPage - 1, 0) });
+
   getFirstIndexByPage = page => page * this.membersPerPage;
 
   getCongressMemberData() {
@@ -29,7 +40,6 @@ export default class Results extends Component {
       this.setState({ members: data });
     }).then(() => {
       this.state.members.forEach(member => {
-        // console.log(member);
         getCongressMemberImage(
           localURL => this.setState({ [member.id.bioguide]: localURL }),
           member.id.bioguide
@@ -70,7 +80,10 @@ export default class Results extends Component {
               );
             })}
         </ul>
-        <PageControl />
+        <PageControl
+          nextPageEvent={this.cycleToNextPage.bind(this)}
+          previousPageEvent={this.cycleToPreviousPage.bind(this)}
+        />
       </div>
     );
   }
