@@ -13,11 +13,15 @@ export default class Results extends Component {
 
     this.state = {
       members: [],
-      imageTable: {}
+      imageTable: {},
+      currentPage: 0
     };
 
+    this.membersPerPage = 10;
     this.getCongressMemberData();
   }
+
+  getFirstIndexByPage = page => page * this.membersPerPage;
 
   getCongressMemberData() {
     return getCongressMembers(data => {
@@ -36,24 +40,33 @@ export default class Results extends Component {
   render() {
     return (
       <ul className={"member-list"}>
-        {this.state.members.map(member => {
-          let term = member.terms[member.terms.length - 1];
-          let gender =
-            member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
-          let title = term.type == "sen" ? "Senator" : `Congress${gender}`;
+        {this.state.members
+          .slice(
+            this.getFirstIndexByPage(this.state.currentPage),
+            Math.min(
+              this.getFirstIndexByPage(this.state.currentPage) +
+                (this.membersPerPage - 1),
+              this.state.members.length - 1
+            )
+          )
+          .map(member => {
+            let term = member.terms[member.terms.length - 1];
+            let gender =
+              member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
+            let title = term.type == "sen" ? "Senator" : `Congress${gender}`;
 
-          return (
-            <li key={member.id.bioguide} className={"member-view"}>
-              <MemberView
-                memberName={member.name.official_full}
-                memberImage={this.state[member.id.bioguide]}
-                memberTitle={title}
-                memberParty={term.party}
-                memberState={term.state}
-              />
-            </li>
-          );
-        })}
+            return (
+              <li key={member.id.bioguide} className={"member-view"}>
+                <MemberView
+                  memberName={member.name.official_full}
+                  memberImage={this.state[member.id.bioguide]}
+                  memberTitle={title}
+                  memberParty={term.party}
+                  memberState={term.state}
+                />
+              </li>
+            );
+          })}
       </ul>
     );
   }
