@@ -1,5 +1,6 @@
 import React from "react";
 import MemberView from "./MemberView";
+import { states } from "./states";
 
 export default function MemberViewList(props) {
   return (
@@ -25,7 +26,7 @@ export default function MemberViewList(props) {
                 memberImage={props.memberImages[member.id.bioguide]}
                 memberTitle={title}
                 memberParty={term.party}
-                memberState={term.state}
+                memberState={states[term.state]}
               />
             </li>
           );
