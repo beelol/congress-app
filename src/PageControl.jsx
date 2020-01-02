@@ -25,7 +25,7 @@ export default class PageControl extends Component {
               this.props.setPage(currentElement);
             }}
           >
-            {currentElement + 1}
+            {currentElement > -1 ? currentElement + 1 : ""}
           </button>
         )
       );
@@ -36,9 +36,19 @@ export default class PageControl extends Component {
 
   render = () => (
     <div className={"page-control"}>
-      <button onClick={this.props.previousPageEvent}>{"<"}</button>
+      <button
+        onClick={this.props.previousPageEvent}
+        disabled={this.props.currentPage <= 0}
+      >
+        {"<"}
+      </button>
       {this.getPageIndexButtons()}
-      <button onClick={this.props.nextPageEvent}>{">"}</button>
+      <button
+        onClick={this.props.nextPageEvent}
+        disabled={this.props.currentPage >= this.props.lastPage}
+      >
+        {">"}
+      </button>
     </div>
   );
 }

@@ -79,6 +79,12 @@ button {
   height: 60px;
 }
 
+button:disabled {
+  cursor: auto;
+  color: transparent;
+  opacity: 0;
+}
+
 button:hover {
   color: #0059ffba;
   font: 40px system-ui;

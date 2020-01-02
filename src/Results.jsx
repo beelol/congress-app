@@ -65,7 +65,8 @@ export default class Results extends Component {
     );
 
     this.setState({
-      members: newMembers
+      members: newMembers,
+      currentPage: 0
     });
   }
 
