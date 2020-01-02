@@ -9,6 +9,8 @@ import {
   getCongressMemberImage
 } from "./GetCongressMembers";
 
+import FuzzySearch from "fuzzy-search";
+
 export default class Results extends Component {
   constructor() {
     super();
@@ -47,6 +49,10 @@ export default class Results extends Component {
     return getCongressMembers(data => {
       this.allMembers = data;
       this.setState({ members: this.allMembers });
+      this.searcher = new FuzzySearch(this.allMembers, ["name.official_full"], {
+        caseSensitive: false,
+        sort: true
+      });
     }).then(() => {
       let memberImages = { ...this.state.memberImages };
       this.state.members.forEach(member => {
@@ -60,9 +66,8 @@ export default class Results extends Component {
 
   updateSearchTerm(e) {
     let searchTerm = e.target.value;
-    let newMembers = this.allMembers.filter(member =>
-      member.name.official_full.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+
+    const newMembers = this.searcher.search(searchTerm);
 
     this.setState({
       members: newMembers,
