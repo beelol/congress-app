@@ -85,3 +85,13 @@ button:hover {
 button:focus {
   outline: none;
 }
+
+.current-page-button {
+  color: #4b84efba;
+  cursor: auto;
+}
+
+.current-page-button:hover {
+  color: #4b84efba;
+  font: 30px system-ui;
+}

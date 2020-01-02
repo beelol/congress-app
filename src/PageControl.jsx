@@ -15,18 +15,19 @@ export default class PageControl extends Component {
       let currentElement = lastButtonIndex - 4 + i;
 
       buttons.unshift(
-        <button
-          className={
-            currentElement === this.props.currentPage
-              ? "current-page-button"
-              : ""
-          }
-          onClick={() => {
-            this.props.setPage(currentElement);
-          }}
-        >
-          {currentElement + 1}
-        </button>
+        currentElement === this.props.currentPage ? (
+          <button className={"current-page-button"}>
+            {currentElement + 1}
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              this.props.setPage(currentElement);
+            }}
+          >
+            {currentElement + 1}
+          </button>
+        )
       );
     }
 
