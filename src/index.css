@@ -18,6 +18,7 @@ code {
   grid-gap: 50px 100px;
   grid-template-columns: 25% 25% 25%;
   padding: 50px;
+  padding-top: 0px;
   align-content: center;
   justify-content: center;
 }
@@ -67,6 +68,7 @@ button {
   height: 50px;
   font: 30px system-ui;
   margin: 15px;
+  margin-top: 0px;
   background: none;
   border: none;
   color: #a2a2a2ba;
@@ -94,4 +96,23 @@ button:focus {
 .current-page-button:hover {
   color: #4b84efba;
   font: 30px system-ui;
+}
+
+.member-search {
+  margin-left: 147px;
+  width: 250px;
+  height: 50px;
+  border-radius: 7px;
+  font: 20px system-ui;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #a2a2a224;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  box-shadow: 7px 7px 7px #80808030;
+  border: none;
+}
+
+.member-search:focus {
+  outline: none;
 }

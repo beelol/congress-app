@@ -1,6 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import PageControl from "./PageControl";
+import Search from "./Search";
 
 import MemberViewList from "./MemberViewList";
 import {
@@ -57,6 +58,7 @@ export default class Results extends Component {
   render() {
     return (
       <div className="app-container">
+        <Search />
         <MemberViewList
           members={this.state.members}
           memberImages={this.state.memberImages}
