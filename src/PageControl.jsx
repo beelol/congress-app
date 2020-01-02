@@ -9,19 +9,23 @@ export default class PageControl extends Component {
     let buttons = [];
 
     let firstButtonIndex = this.getFirstPageButtonIndex(this.props.currentPage);
-    let lastButtonIndex = firstButtonIndex + 5;
+    let lastButtonIndex = Math.min(firstButtonIndex + 4, this.props.lastPage);
 
-    for (let i = firstButtonIndex; i < lastButtonIndex; i++) {
-      if (i >= this.props.lastPage) break;
+    for (let i = 4; i >= 0; i--) {
+      let currentElement = lastButtonIndex - 4 + i;
 
-      buttons.push(
+      buttons.unshift(
         <button
-          className={i === this.props.currentPage ? "current-page-button" : ""}
+          className={
+            currentElement === this.props.currentPage
+              ? "current-page-button"
+              : ""
+          }
           onClick={() => {
-            this.props.setPage(i);
+            this.props.setPage(currentElement);
           }}
         >
-          {i + 1}
+          {currentElement + 1}
         </button>
       );
     }
