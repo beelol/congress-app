@@ -9,7 +9,7 @@ export default function MemberViewList(props) {
           props.firstPageIndex,
           Math.min(
             props.firstPageIndex + (props.membersPerPage - 1),
-            props.members.length - 1
+            props.members.length
           )
         )
         .map(member => {

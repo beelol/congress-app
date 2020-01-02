@@ -1,16 +1,10 @@
 import React from "react";
 import { Component } from "react";
 
-export default class Search extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      query: ""
-    };
-  }
-
-  render() {
-    return <input className="member-search" placeholder="Search..."></input>;
-  }
-}
+export const Search = props => (
+  <input
+    className="member-search"
+    placeholder="Search..."
+    onChange={props.updateSearchTerm}
+  ></input>
+);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import PageControl from "./PageControl";
-import Search from "./Search";
+import { Search } from "./Search";
 
 import MemberViewList from "./MemberViewList";
 import {
@@ -17,9 +17,11 @@ export default class Results extends Component {
       members: [],
       imageTable: {},
       currentPage: 0,
-      memberImages: {}
+      memberImages: {},
+      searchTerm: ""
     };
 
+    this.allMembers = [];
     this.membersPerPage = 10;
     this.getCongressMemberData();
   }
@@ -43,7 +45,8 @@ export default class Results extends Component {
 
   getCongressMemberData() {
     return getCongressMembers(data => {
-      this.setState({ members: data });
+      this.allMembers = data;
+      this.setState({ members: this.allMembers });
     }).then(() => {
       let memberImages = { ...this.state.memberImages };
       this.state.members.forEach(member => {
@@ -55,10 +58,21 @@ export default class Results extends Component {
     });
   }
 
+  updateSearchTerm(e) {
+    let searchTerm = e.target.value;
+    let newMembers = this.allMembers.filter(member =>
+      member.name.official_full.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    this.setState({
+      members: newMembers
+    });
+  }
+
   render() {
     return (
       <div className="app-container">
-        <Search />
+        <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
         <MemberViewList
           members={this.state.members}
           memberImages={this.state.memberImages}
