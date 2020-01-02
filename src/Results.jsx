@@ -2,7 +2,7 @@ import React from "react";
 import { Component } from "react";
 import PageControl from "./PageControl";
 
-import MemberView from "./MemberView";
+import MemberViewList from "./MemberViewList";
 import {
   getCongressMembers,
   getCongressMemberImage
@@ -15,7 +15,8 @@ export default class Results extends Component {
     this.state = {
       members: [],
       imageTable: {},
-      currentPage: 0
+      currentPage: 0,
+      memberImages: {}
     };
 
     this.membersPerPage = 10;
@@ -43,11 +44,12 @@ export default class Results extends Component {
     return getCongressMembers(data => {
       this.setState({ members: data });
     }).then(() => {
+      let memberImages = { ...this.state.memberImages };
       this.state.members.forEach(member => {
-        getCongressMemberImage(
-          localURL => this.setState({ [member.id.bioguide]: localURL }),
-          member.id.bioguide
-        );
+        getCongressMemberImage(localURL => {
+          memberImages[member.id.bioguide] = localURL;
+          this.setState({ memberImages: memberImages });
+        }, member.id.bioguide);
       });
     });
   }
@@ -55,35 +57,12 @@ export default class Results extends Component {
   render() {
     return (
       <div className="app-container">
-        <ul className={"member-list"}>
-          {this.state.members
-            .slice(
-              this.getFirstIndexByPage(this.state.currentPage),
-              Math.min(
-                this.getFirstIndexByPage(this.state.currentPage) +
-                  (this.membersPerPage - 1),
-                this.state.members.length - 1
-              )
-            )
-            .map(member => {
-              let term = member.terms[member.terms.length - 1];
-              let gender =
-                member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
-              let title = term.type === "sen" ? "Senator" : `Congress${gender}`;
-
-              return (
-                <li key={member.id.bioguide} className={"member-view"}>
-                  <MemberView
-                    memberName={member.name.official_full}
-                    memberImage={this.state[member.id.bioguide]}
-                    memberTitle={title}
-                    memberParty={term.party}
-                    memberState={term.state}
-                  />
-                </li>
-              );
-            })}
-        </ul>
+        <MemberViewList
+          members={this.state.members}
+          memberImages={this.state.memberImages}
+          firstPageIndex={this.getFirstIndexByPage(this.state.currentPage)}
+          membersPerPage={this.membersPerPage}
+        />
         <PageControl
           nextPageEvent={this.cycleToNextPage.bind(this)}
           previousPageEvent={this.cycleToPreviousPage.bind(this)}
