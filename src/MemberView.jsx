@@ -5,7 +5,7 @@ export default class MemberView extends Component {
   render = () => (
     <React.Fragment>
       {this.props.memberImage !== undefined ? (
-        <img src={this.props.memberImage} className={"member-image"} />
+        <img alt="" src={this.props.memberImage} className={"member-image"} />
       ) : (
         undefined
       )}

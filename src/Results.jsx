@@ -33,6 +33,10 @@ export default class Results extends Component {
   cycleToPreviousPage = () =>
     this.setState({ currentPage: Math.max(this.state.currentPage - 1, 0) });
 
+  setPage = newPage => {
+    this.setState({ currentPage: newPage });
+  };
+
   getFirstIndexByPage = page => page * this.membersPerPage;
 
   getCongressMemberData() {
@@ -65,7 +69,7 @@ export default class Results extends Component {
               let term = member.terms[member.terms.length - 1];
               let gender =
                 member.bio.gender.toLowerCase() === "m" ? "man" : "woman";
-              let title = term.type == "sen" ? "Senator" : `Congress${gender}`;
+              let title = term.type === "sen" ? "Senator" : `Congress${gender}`;
 
               return (
                 <li key={member.id.bioguide} className={"member-view"}>
@@ -83,6 +87,9 @@ export default class Results extends Component {
         <PageControl
           nextPageEvent={this.cycleToNextPage.bind(this)}
           previousPageEvent={this.cycleToPreviousPage.bind(this)}
+          currentPage={this.state.currentPage}
+          lastPage={this.getNumPages() - 1}
+          setPage={this.setPage.bind(this)}
         />
       </div>
     );
