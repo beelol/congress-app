@@ -20,12 +20,14 @@ export default class Results extends Component {
       imageTable: {},
       currentPage: 0,
       memberImages: {},
-      searchTerm: ""
+      searchTerm: "",
+      stateFilter: "",
+      partyFilter: ""
     };
 
     this.allMembers = [];
     this.membersPerPage = 10;
-    this.getCongressMemberData();
+    this.getCongressMemberData().then(() => this.updateMemberList());
   }
 
   getNumPages = () =>
@@ -64,14 +66,47 @@ export default class Results extends Component {
     });
   }
 
+  updateMemberList() {
+    this.setState({
+      members: this.filterByParty(
+        this.filterByState(this.searcher.search(this.state.searchTerm))
+      )
+    });
+  }
+
   updateSearchTerm(e) {
     let searchTerm = e.target.value;
 
-    const newMembers = this.searcher.search(searchTerm);
+    const newMembers = this.filterByParty(
+      this.filterByState(this.searcher.search(searchTerm))
+    );
 
     this.setState({
+      searchTerm: searchTerm,
       members: newMembers,
       currentPage: 0
+    });
+  }
+
+  filterByState(members) {
+    // return the same list if there is no state filter.
+    if (this.state.stateFilter.length <= 0) return members;
+
+    return members.filter(member => {
+      let term = member.terms[member.terms.length - 1];
+
+      return term.state.toLowerCase() === this.state.stateFilter.toLowerCase();
+    });
+  }
+
+  filterByParty(members) {
+    // return the same list if there is no party filter.
+    if (this.state.partyFilter.length <= 0) return members;
+
+    return members.filter(member => {
+      let term = member.terms[member.terms.length - 1];
+
+      return term.party.toLowerCase() === this.state.partyFilter.toLowerCase();
     });
   }
 
