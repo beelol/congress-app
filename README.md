@@ -2,17 +2,19 @@
 
 To run the application, enter the root directory of the repository, then run
 
-- npm install
-- npm start
+```
+npm install
+npm start
+```
 
 You will then be able to visit [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## Directions
 
-You may search for congressmembers by typing into the top left search bar.
-To the right of the search bar, there is a filter selection box to display members of only a specified state.
-To the right of that selection box is another to display members only within a certain party.
-Finally, to sort by specific properties, including a member's name, party, number of terms served, and state, the bar at the very top right will allow you to choose from one of the former options.
+- You may search for congressmembers by typing into the top left search bar.
+- To the right of the search bar, there is a filter selection box to display members of only a specified state.
+- To the right of that selection box is another to display members only within a certain party.
+- Finally, to sort by specific properties, including a member's name, party, number of terms served, and state, the bar at the very top right will allow you to choose from one of the former options.
 
 ## Available Scripts
 
