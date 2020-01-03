@@ -134,18 +134,23 @@ export default class Results extends Component {
         // comparisonFunction = members.sort();
         break;
       case "state":
+        comparisonFunction = (member1, member2) => {
+          let state1 = member1.terms[member1.terms.length - 1].state;
+          let state2 = member2.terms[member2.terms.length - 1].state;
+
+          if (state1 < state2) return -1;
+          if (state1 > state2) return 1;
+
+          return 0;
+        };
         break;
       case "name":
         comparisonFunction = (member1, member2) => {
           let name1 = member1.name.official_full.toUpperCase();
           let name2 = member2.name.official_full.toUpperCase();
 
-          if (name1 < name2) {
-            return -1;
-          }
-          if (name1 > name2) {
-            return 1;
-          }
+          if (name1 < name2) return -1;
+          if (name1 > name2) return 1;
 
           return 0;
         };
