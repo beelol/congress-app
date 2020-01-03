@@ -164,6 +164,12 @@ export default class Results extends Component {
         };
         break;
       case "terms":
+        comparisonFunction = (member1, member2) => {
+          let numTerms1 = member1.terms.length;
+          let numTerms2 = member2.terms.length;
+
+          return numTerms2 - numTerms1;
+        };
         break;
       default:
         return members;
@@ -173,8 +179,6 @@ export default class Results extends Component {
   }
 
   render() {
-    console.log(this.state.stateFilter);
-
     const displayMembers = this.sortMembers(
       this.filterByParty(
         this.filterByState(this.searcher.search(this.state.searchTerm))
