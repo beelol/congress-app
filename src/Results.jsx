@@ -131,7 +131,15 @@ export default class Results extends Component {
 
     switch (this.state.sortTerm) {
       case "party":
-        // comparisonFunction = members.sort();
+        comparisonFunction = (member1, member2) => {
+          let party1 = member1.terms[member1.terms.length - 1].party;
+          let party2 = member2.terms[member2.terms.length - 1].party;
+
+          if (party1 < party2) return -1;
+          if (party1 > party2) return 1;
+
+          return 0;
+        };
         break;
       case "state":
         comparisonFunction = (member1, member2) => {
