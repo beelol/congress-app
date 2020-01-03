@@ -106,7 +106,6 @@ button:focus {
 }
 
 .member-search {
-  margin-left: 147px;
   width: 250px;
   height: 50px;
   border-radius: 7px;
@@ -114,12 +113,53 @@ button:focus {
   padding-left: 15px;
   padding-right: 15px;
   background: #a2a2a224;
-  margin-top: 30px;
-  margin-bottom: 30px;
   box-shadow: 7px 7px 7px #80808030;
   border: none;
+  transition: all 0.2s ease-in-out;
 }
 
 .member-search:focus {
   outline: none;
+  box-shadow: 7px 7px 7px #56a4ce80;
+  transition: all 0.2s ease-in-out;
+}
+
+.member-search:hover {
+  box-shadow: 7px 7px 7px #56a4ce80;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-options {
+  margin-left: 147px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.filter-options select {
+  margin-left: 50px;
+}
+
+select {
+  width: 250px;
+  height: 50px;
+  border-radius: 7px;
+  font: 20px system-ui;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: #a2a2a224;
+  box-shadow: 7px 7px 7px #80808030;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 7px 7px 7px #56a4ce80;
+  transition: all 0.2s ease-in-out;
+}
+
+select:hover {
+  outline: none;
+  box-shadow: 7px 7px 7px #56a4ce80;
+  transition: all 0.2s ease-in-out;
 }

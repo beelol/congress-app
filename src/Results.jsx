@@ -129,9 +129,11 @@ export default class Results extends Component {
 
     return (
       <div className="app-container">
-        <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
-        <StatesDropdown onChange={this.setStateFilter.bind(this)} />
-        <PartyDropdown onChange={this.setPartyFilter.bind(this)} />
+        <div className="filter-options">
+          <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
+          <StatesDropdown onChange={this.setStateFilter.bind(this)} />
+          <PartyDropdown onChange={this.setPartyFilter.bind(this)} />
+        </div>
         <MemberViewList
           members={displayMembers}
           memberImages={this.state.memberImages}
