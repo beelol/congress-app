@@ -1,5 +1,4 @@
 import React from "react";
-import { states } from "./states";
 
 export default function PartyDropdown(props) {
   return (
