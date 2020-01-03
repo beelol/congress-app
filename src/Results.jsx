@@ -2,7 +2,7 @@ import React from "react";
 import { Component } from "react";
 import PageControl from "./PageControl";
 import { Search } from "./Search";
-
+import StatesDropdown from "./StatesDropdown";
 import MemberViewList from "./MemberViewList";
 import {
   getCongressMembers,
@@ -27,15 +27,23 @@ export default class Results extends Component {
 
     this.allMembers = [];
     this.membersPerPage = 10;
-    this.getCongressMemberData().then(() => this.updateMemberList());
+    this.getCongressMemberData();
+
+    this.searcher = new FuzzySearch(this.allMembers, ["name.official_full"], {
+      caseSensitive: false,
+      sort: true
+    });
   }
 
-  getNumPages = () =>
-    Math.ceil(this.state.members.length / this.membersPerPage);
+  getNumPages = membersToDisplay =>
+    Math.ceil(membersToDisplay.length / this.membersPerPage);
 
-  cycleToNextPage = () =>
+  cycleToNextPage = displayMembers =>
     this.setState({
-      currentPage: Math.min(this.state.currentPage + 1, this.getNumPages() - 1)
+      currentPage: Math.min(
+        this.state.currentPage + 1,
+        this.getNumPages(displayMembers) - 1
+      )
     });
 
   cycleToPreviousPage = () =>
@@ -66,24 +74,11 @@ export default class Results extends Component {
     });
   }
 
-  updateMemberList() {
-    this.setState({
-      members: this.filterByParty(
-        this.filterByState(this.searcher.search(this.state.searchTerm))
-      )
-    });
-  }
-
   updateSearchTerm(e) {
     let searchTerm = e.target.value;
 
-    const newMembers = this.filterByParty(
-      this.filterByState(this.searcher.search(searchTerm))
-    );
-
     this.setState({
       searchTerm: searchTerm,
-      members: newMembers,
       currentPage: 0
     });
   }
@@ -110,21 +105,36 @@ export default class Results extends Component {
     });
   }
 
+  setStateFilter(e) {
+    let stateFilter = e.target.value;
+
+    console.log(stateFilter);
+
+    this.setState({ stateFilter: stateFilter, currentPage: 0 });
+  }
+
   render() {
+    console.log(this.state.stateFilter);
+
+    const displayMembers = this.filterByParty(
+      this.filterByState(this.searcher.search(this.state.searchTerm))
+    );
+
     return (
       <div className="app-container">
         <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
+        <StatesDropdown onChange={this.setStateFilter.bind(this)} />
         <MemberViewList
-          members={this.state.members}
+          members={displayMembers}
           memberImages={this.state.memberImages}
           firstPageIndex={this.getFirstIndexByPage(this.state.currentPage)}
           membersPerPage={this.membersPerPage}
         />
         <PageControl
-          nextPageEvent={this.cycleToNextPage.bind(this)}
+          nextPageEvent={this.cycleToNextPage.bind(this, displayMembers)}
           previousPageEvent={this.cycleToPreviousPage.bind(this)}
           currentPage={this.state.currentPage}
-          lastPage={this.getNumPages() - 1}
+          lastPage={this.getNumPages(displayMembers) - 1}
           setPage={this.setPage.bind(this)}
         />
       </div>
