@@ -4,6 +4,7 @@ import PageControl from "./PageControl";
 import { Search } from "./Search";
 import StatesDropdown from "./StatesDropdown";
 import PartyDropdown from "./PartyDropdown";
+import SortDropdown from "./SortDropdown";
 import MemberViewList from "./MemberViewList";
 import {
   getCongressMembers,
@@ -23,7 +24,8 @@ export default class Results extends Component {
       memberImages: {},
       searchTerm: "",
       stateFilter: "",
-      partyFilter: ""
+      partyFilter: "",
+      sortTerm: ""
     };
 
     this.allMembers = [];
@@ -115,16 +117,55 @@ export default class Results extends Component {
   setPartyFilter(e) {
     let partyFilter = e.target.value;
 
-    console.log(partyFilter);
-
     this.setState({ partyFilter: partyFilter, currentPage: 0 });
+  }
+
+  setSortTerm(e) {
+    let sortTerm = e.target.value;
+
+    this.setState({ sortTerm: sortTerm });
+  }
+
+  sortMembers(members) {
+    let comparisonFunction = (member1, member2) => {};
+
+    switch (this.state.sortTerm) {
+      case "party":
+        // comparisonFunction = members.sort();
+        break;
+      case "state":
+        break;
+      case "name":
+        comparisonFunction = (member1, member2) => {
+          let name1 = member1.name.official_full.toUpperCase();
+          let name2 = member2.name.official_full.toUpperCase();
+
+          if (name1 < name2) {
+            return -1;
+          }
+          if (name1 > name2) {
+            return 1;
+          }
+
+          return 0;
+        };
+        break;
+      case "terms":
+        break;
+      default:
+        return members;
+    }
+
+    return members.sort(comparisonFunction);
   }
 
   render() {
     console.log(this.state.stateFilter);
 
-    const displayMembers = this.filterByParty(
-      this.filterByState(this.searcher.search(this.state.searchTerm))
+    const displayMembers = this.sortMembers(
+      this.filterByParty(
+        this.filterByState(this.searcher.search(this.state.searchTerm))
+      )
     );
 
     return (
@@ -133,6 +174,7 @@ export default class Results extends Component {
           <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
           <StatesDropdown onChange={this.setStateFilter.bind(this)} />
           <PartyDropdown onChange={this.setPartyFilter.bind(this)} />
+          <SortDropdown onChange={this.setSortTerm.bind(this)} />
         </div>
         <MemberViewList
           members={displayMembers}
