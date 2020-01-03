@@ -114,8 +114,8 @@ button:focus {
   padding-right: 15px;
   background: #a2a2a224;
   box-shadow: 7px 7px 7px #80808030;
-  border: none;
   transition: all 0.2s ease-in-out;
+  border: none;
 }
 
 .member-search:focus {
@@ -144,8 +144,6 @@ select {
   height: 50px;
   border-radius: 7px;
   font: 20px system-ui;
-  padding-left: 15px;
-  padding-right: 15px;
   background: #a2a2a224;
   box-shadow: 7px 7px 7px #80808030;
   border: none;
