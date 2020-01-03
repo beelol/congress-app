@@ -3,6 +3,7 @@ import { Component } from "react";
 import PageControl from "./PageControl";
 import { Search } from "./Search";
 import StatesDropdown from "./StatesDropdown";
+import PartyDropdown from "./PartyDropdown";
 import MemberViewList from "./MemberViewList";
 import {
   getCongressMembers,
@@ -108,9 +109,15 @@ export default class Results extends Component {
   setStateFilter(e) {
     let stateFilter = e.target.value;
 
-    console.log(stateFilter);
-
     this.setState({ stateFilter: stateFilter, currentPage: 0 });
+  }
+
+  setPartyFilter(e) {
+    let partyFilter = e.target.value;
+
+    console.log(partyFilter);
+
+    this.setState({ partyFilter: partyFilter, currentPage: 0 });
   }
 
   render() {
@@ -124,6 +131,7 @@ export default class Results extends Component {
       <div className="app-container">
         <Search updateSearchTerm={this.updateSearchTerm.bind(this)} />
         <StatesDropdown onChange={this.setStateFilter.bind(this)} />
+        <PartyDropdown onChange={this.setPartyFilter.bind(this)} />
         <MemberViewList
           members={displayMembers}
           memberImages={this.state.memberImages}
